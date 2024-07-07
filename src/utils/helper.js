@@ -112,10 +112,24 @@ function getMetadataAndPair(coin) {
   }
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function sleep(from = 10, to = 15) {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(), getRandomInt(from, to) * 1000)
+  );
+}
+
 export {
   formatDateNowToCustomFormat,
   generateTokenInfo,
   getChannel,
   getTimestamp,
   getMetadataAndPair,
+  sleep,
+  getRandomInt,
 };

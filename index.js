@@ -6,6 +6,7 @@ import { Config } from "./config.js";
 import { COIN } from "./src/utils/enum/coin.js";
 import { InitAi } from "./src/module/init_ai/init_ai.js";
 import { userConfig } from "./user_config.js";
+import { sleep } from "./src/utils/helper.js";
 
 async function doQuest(walletAddress, privateKey) {
   return new Promise(async (resolve, reject) => {
@@ -46,6 +47,7 @@ async function doQuest(walletAddress, privateKey) {
 
                 for (const number of config.config) {
                   await config.executeConfigCode(number);
+                  await sleep(15, 30);
                 }
 
                 initia.exception.resetRoutine();

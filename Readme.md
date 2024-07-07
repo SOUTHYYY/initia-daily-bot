@@ -92,10 +92,6 @@ const userConfig = [
 - To do 1 time run execute `npm run start`
 - To do scheduler run execute `npm run schedule` (EXPERIMENTAL)
 
-## Note
-
-This bot send token to my testnet address account, to change the address with yours, check the `src/utils/constant.js` and change the `RECEIVERWALLETADDRESS` with your address.
-
 ## UPDATE
 
 to update the bot,

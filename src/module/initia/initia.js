@@ -171,18 +171,17 @@ class Initia extends InitiaSigner {
 
   async sendOneInitToOther() {
     try {
-      console.log(`Sending 1 init to ${AppConstant.RECEIVERWALLETADDRESS}`);
+      const walletAddress = AppConstant.getReceiverWalletAddress();
+      console.log(`Sending 1 init to ${walletAddress}`);
       const msg = new initia.MsgSend(
         this.address, // sender address
-        AppConstant.RECEIVERWALLETADDRESS, // recipient address
+        walletAddress, // recipient address
         "1000000uinit" // 1 Init
       );
 
       await this.signAndBroadcast(msg)
         .then(() => {
-          console.log(
-            `Successfully Send 1 Init To ${AppConstant.RECEIVERWALLETADDRESS}`
-          );
+          console.log(`Successfully Send 1 Init To ${walletAddress}`);
         })
         .catch((err) => {
           throw err;
@@ -222,10 +221,11 @@ class Initia extends InitiaSigner {
         );
       }
 
+      const walletAddress = AppConstant.getReceiverWalletAddress();
       console.log(
-        `Sending ${amount} ${coin} to ${
-          AppConstant.RECEIVERWALLETADDRESS
-        } on ${BridgeID.getBridgeByValue(bridgeId)}`
+        `Sending ${amount} ${coin} to ${walletAddress} on ${BridgeID.getBridgeByValue(
+          bridgeId
+        )}`
       );
 
       const msg = new initia.MsgTransfer(
@@ -233,7 +233,7 @@ class Initia extends InitiaSigner {
         getChannel(coin),
         initia.Coin.fromString(`${amount * 1000000}${coin}`),
         this.address,
-        AppConstant.RECEIVERWALLETADDRESS,
+        walletAddress,
         new initia.Height(0, 0),
         getTimestamp(coin)
       );
@@ -242,9 +242,11 @@ class Initia extends InitiaSigner {
       await this.signAndBroadcast(msg)
         .then(() => {
           console.log(
-            `Successfully Send ${amount} ${COIN.getCoinByValue(coin)} To ${
-              AppConstant.RECEIVERWALLETADDRESS
-            } From ${BridgeID.getBridgeByValue(bridgeId)} Layer`
+            `Successfully Send ${amount} ${COIN.getCoinByValue(
+              coin
+            )} To ${walletAddress} From ${BridgeID.getBridgeByValue(
+              bridgeId
+            )} Layer`
           );
         })
         .catch((err) => {
@@ -257,22 +259,25 @@ class Initia extends InitiaSigner {
 
   async sendTokenDifferentLayer(bridgeId, coin = COIN.INIT, amount = 1) {
     try {
+      const walletAddress = AppConstant.getReceiverWalletAddress();
       console.log(
-        `Sending ${amount} ${coin} to ${
-          AppConstant.RECEIVERWALLETADDRESS
-        } on ${BridgeID.getBridgeByValue(bridgeId)}`
+        `Sending ${amount} ${coin} to ${walletAddress} on ${BridgeID.getBridgeByValue(
+          bridgeId
+        )}`
       );
       const msg = new initia.MsgInitiateTokenDeposit();
       msg.bridge_id = bridgeId;
       msg.amount = initia.Coin.fromString(`${amount * 1000000}${coin}`);
       msg.sender = this.address;
-      msg.to = AppConstant.RECEIVERWALLETADDRESS;
+      msg.to = walletAddress;
       await this.signAndBroadcast(msg)
         .then(() => {
           console.log(
-            `Successfully Send ${amount} ${COIN.getCoinByValue(coin)} To ${
-              AppConstant.RECEIVERWALLETADDRESS
-            } From ${BridgeID.getBridgeByValue(bridgeId)} Layer`
+            `Successfully Send ${amount} ${COIN.getCoinByValue(
+              coin
+            )} To ${walletAddress} From ${BridgeID.getBridgeByValue(
+              bridgeId
+            )} Layer`
           );
         })
         .catch((err) => {
@@ -307,10 +312,11 @@ class Initia extends InitiaSigner {
       );
     }
     try {
+      const walletAddress = AppConstant.getReceiverWalletAddress();
       console.log(
-        `Sending ${amount} ${coin} to ${
-          AppConstant.RECEIVERWALLETADDRESS
-        } ${BridgeID.getBridgeByValue(bridgeId)}`
+        `Sending ${amount} ${coin} to ${walletAddress} ${BridgeID.getBridgeByValue(
+          bridgeId
+        )}`
       );
       const brigeArgs = [
         initia.bcs.address().serialize(metadata).toBase64(),
@@ -351,9 +357,9 @@ class Initia extends InitiaSigner {
       await this.signAndBroadcast(msg)
         .then(() => {
           console.log(
-            `Successfully Send ${amount} ${COIN.getCoinByValue(coin)} To ${
-              AppConstant.RECEIVERWALLETADDRESS
-            } on ${BridgeID.getBridgeByValue(bridgeId)}`
+            `Successfully Send ${amount} ${COIN.getCoinByValue(
+              coin
+            )} To ${walletAddress} on ${BridgeID.getBridgeByValue(bridgeId)}`
           );
         })
         .catch((err) => {
@@ -657,11 +663,12 @@ class Initia extends InitiaSigner {
 
   async bridge(bridgeId, coin, amount) {
     try {
-      console.log(`Bridging 1 init to ${AppConstant.RECEIVERWALLETADDRESS}`);
+      const walletAddress = AppConstant.getReceiverWalletAddress();
+      console.log(`Bridging 1 init to ${walletAddress}`);
       const msg = new initia.MsgInitiateTokenDeposit(
         this.address, // sender address
         bridgeId,
-        AppConstant.RECEIVERWALLETADDRESS, // recipient address
+        walletAddress, // recipient address
         initia.Coin.fromString(`${amount}${coin}`)
       );
 
@@ -670,9 +677,9 @@ class Initia extends InitiaSigner {
       await this.signAndBroadcast(msg)
         .then(() => {
           console.log(
-            `Successfully Bridge 1 Init To ${
-              AppConstant.RECEIVERWALLETADDRESS
-            } on ${BridgeID.getBridgeByValue(bridgeId)}`
+            `Successfully Bridge 1 Init To ${walletAddress} on ${BridgeID.getBridgeByValue(
+              bridgeId
+            )}`
           );
         })
         .catch((err) => {
